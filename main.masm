@@ -10,17 +10,6 @@ theSum DWORD ?
 
 .code
 ArraySum PROC USES esi ecx ;ArraySum Function
-	COMMENT !
-		write a procedure named ArraySum that recieves two parameters from a 
-		calling program: a pointer to an array of 32 bit integers, and a count 
-		of the number of array elements. (Use registers ESI and ECX as global 
-		variables), It should calculate and return the sum of the array in EAX.
-		Test the ArraySum procedure by calling it in main and passing the offset 
-		and length of an array of 32-bit integers (again by using a global 
-		variable). After calling ArraySum, the program should save the procedure's 
-		return value in a variable named theSum.
-		This procedure sums an array in reverse.
-	!
 	mov eax,0
 	mov ecx,LENGTHOF array
 	L1:
