@@ -4,42 +4,42 @@ section .data
 	LENGTHOF_array equ ($ - array)/TYPE_array
 
 section .bss
-	theSum resw 1
+	sum resw 1				; summation value
 
 section .text
-	global _main				;specify the program's entry point
+	global _start				; program entry point
 
 ; ArraySum Function
 ArraySum:
 	; This procedure sums an array in reverse.
 
 	; arguments using eax, ecx
-	xor eax, eax			; function argument sum
-	xor ecx, ecx			; function argument index
+	xor eax, eax				; function argument return value
+	xor ecx, ecx				; function argument index
 
 	; Sum, Index
-	mov eax, 0				; sum
-	mov ecx, LENGTHOF_array	; index
+	mov word [sum], 0		; sum
+	mov ecx, LENGTHOF_array - 1	; index
 
 	; loop
 	L1:
-		; repeating
-		mov esi, [array + TYPE_array * ecx]	;
-		add [theSum], esi		; save value in theSum
+		; repeat
+		movzx esi, word [array + TYPE_array * ecx]	; retrieve value
+		add [sum], si		; add value to sum
 
-		; conditional
-		dec ecx				; decrement
-		cmp ecx, 0			; compare to zero
-		jge L1				; jump
+		; condition
+		dec ecx					; decrement
+		cmp ecx, 0				; compare to zero
+		jge L1					; jump
+
+	; return sum
+	movzx eax, word [sum]		; return the value in sum to eax
 	ret
 
-_main:
-	push [theSum]
-	call ArraySum			; uses esi ecx
-	mov eax, theSum			; return the value in eax
-	pop [theSum]
+_start:
+	call ArraySum				; uses esi ecx
 
     ; exit
-	mov eax, 1				; system call number for sys_exit
-    xor ebx, ebx			; exit code 0
-    int 0x80				; call the kernel to exit
+	mov eax, 1					; system call number for sys_exit
+    xor ebx, ebx				; exit code 0
+    int 0x80					; call the kernel
