@@ -10,6 +10,8 @@ theSum DWORD ?
 
 .code
 ArraySum PROC USES esi ecx ;ArraySum Function
+	; This procedure sums an array in reverse.
+
 	mov eax,0
 	mov ecx,LENGTHOF array
 	L1:
